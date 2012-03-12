@@ -1,0 +1,5 @@
+cron:
+- description: new daily summary job
+  url: /
+  schedule: every 50 minutes
+  

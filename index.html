@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"  "http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>I N S P I R E</title>
+	<meta name="generator" content="TextMate http://macromates.com/">
+	<meta name="author" content="Joao Wilbert">
+
+	<!-- Date: 2011-06-06 -->
+
+    <link type="text/css" rel="stylesheet" media="screen" href="css/styles.css" />
+
+
+</head>
+<body>
+
+	<div id="new_numbers">
+    <h1> New Numbers </h1>
+	{% for number in new_numbers %}
+        <div class="number">
+			<img src='{{base_url}}{{ number.url }}'>
+			
+			<strong>New:</strong>{{ number.new }}
+			<strong>Display:</strong>{{ number.display }}
+			<strong>Digit:</strong>{{ number.digit }}
+		</div>
+    {% endfor %}
+	
+	</div>
+
+
+<!--     <a href="{{ url }}">{{ url_linktext }}</a> -->
+
+</body>
+</html>
