@@ -1,0 +1,105 @@
+body {
+    margin:0;
+    padding:0;
+    overflow-x: hidden;
+}
+img {
+    float:left;
+   width:108px;
+}
+
+.number_holder {
+    float:left;
+    width:118px;
+    padding-right:10px;
+    margin-top:10px;
+}
+
+#header {
+    width:100%;
+    height:20px;
+    padding:30px;
+    color:white;
+    text-align:center;
+    background:black;
+}
+
+@font-face {
+	font-family: League;
+	src: url('../fonts/League_Gothic.otf');
+}
+
+.title {
+    font-family: Georgia,"Times New Roman",serif;
+   	font-size: 12px;
+   	font-weight: bold;
+   	color: #600;
+   	line-height: 22px;
+   	margin: 0;
+   	text-transform: uppercase;
+   	letter-spacing: 1px
+}
+
+#new_numbers {
+    width:970px;
+    float:left;
+    margin-top:40px;
+/*    border:1px solid red;*/
+    margin-bottom:20px;
+}
+
+#all_numbers {
+    width:970px;
+    float:left; 
+    /*border:1px solid red;*/
+}
+
+h1 {
+    padding-bottom:1px;
+    margin-bottom:1px;
+    font-family: Georgia,"Times New Roman",serif;
+   	font-size: 12px;
+   	font-weight: bold;
+   	color: black;
+   	line-height: 22px;
+   	margin: 0;
+   	text-transform: uppercase;
+   	letter-spacing: 1px;
+    width:970px;
+    border-bottom:1px solid black;
+}
+
+.button {
+    cursor:pointer;
+}
+
+/* Status */
+.img_disabled {
+    opacity:0.04;
+    filter:alpha(opacity=4); /* For IE8 and earlier */
+
+}
+
+.img_enabled {
+    opacity:1;
+    filter:alpha(opacity=100); /* For IE8 and earlier */
+}
+
+
+.disabled {
+    margin-top:10px;
+    margin-left:40px;
+    float:left;
+    width:20px;
+    height:20px;
+    background:url("../imgs/disabled.png");
+}
+
+.enabled {
+    margin-top:10px;
+    margin-left:40px;
+    float:left;
+    width:20px;
+    height:20px;
+    background:url("../imgs/enabled.png");
+}

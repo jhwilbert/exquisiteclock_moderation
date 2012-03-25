@@ -1,5 +1,5 @@
 cron:
 - description: new daily summary job
-  url: /
-  schedule: every 50 minutes
+  url: /load_new
+  schedule: every 10 minutes
   

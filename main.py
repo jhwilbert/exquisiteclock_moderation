@@ -96,30 +96,26 @@ class ViewNumbers(webapp.RequestHandler):
 # ACTIONS
 ###############################################################################################        
         
-class add_display(webapp.RequestHandler):
-    def post(self):
-        img_key = self.request.get("k")
-        # curl -d 'k=70038arqiz56IK.jpg' http://localhost:8080/add
+class enable(webapp.RequestHandler):
+    def get(self,img_key):
         
-        #img_key = "60884arqAqKKLk.jpg"
         images_store = ImagesStore()
         images_store = images_store.get_by_key_name(img_key)
         images_store.display = True
         images_store.put()
+        self.redirect("/admin")
         self.response.out.write(True)
                
-class remove_display(webapp.RequestHandler):
-    def post(self):
-        img_key = self.request.get("k")
-        # curl -d 'k=70038arqiz56IK.jpg' http://localhost:8080/remove
-
-        #img_key = "60884arqAqKKLk.jpg"
+class disable(webapp.RequestHandler):
+    def get(self,img_key):
+        
         images_store = ImagesStore()
         images_store = images_store.get_by_key_name(img_key)
         images_store.display = False
         images_store.put()
+        self.redirect("/admin")
         self.response.out.write(True)
-
+        
 # class generate_json(webapp.RequestHandler):
 #     def get(self):
 #         #print ""
@@ -156,12 +152,12 @@ class MainHandler(webapp.RequestHandler):
 
 def main():
     application = webapp.WSGIApplication([('/', MainHandler),
-                                        ('/loadallimages', LoadAllImages),
-                                        ('/loadnewimages', LoadNewImages),
+                                        ('/loadallimages', load_all),
+                                        ('/loadnewimages', load_new),
                                         ('/admin', ViewNumbers),
-                                        ('/add', add_display),
-                                        ('/remove', add_display),
-                                        ('/output', generate_json),
+                                        ('/enable/([^/]+)', enable),
+                                        ('/disable/([^/]+)', disable),
+                                        
                                         ],
                                          debug=True)
     util.run_wsgi_app(application)

@@ -4,9 +4,20 @@ runtime: python
 api_version: 1
 
 handlers:
+- url: /fonts
+  static_dir: fonts
+  
+- url: /css
+  static_dir: css
+
+- url: /imgs
+  static_dir: imgs
+
 - url: /favicon\.ico
   static_files: favicon.ico
   upload: favicon\.ico
 
 - url: .*
   script: main.py
+  
+

@@ -8,28 +8,59 @@
 	<meta name="author" content="Joao Wilbert">
 
 	<!-- Date: 2011-06-06 -->
+    <link rel="stylesheet" href="css/screen.css" type="text/css" media="screen, projection">
+    <link rel="stylesheet" href="css/print.css" type="text/css" media="print">
 
     <link type="text/css" rel="stylesheet" media="screen" href="css/styles.css" />
 
 
 </head>
 <body>
+  <div id="header" class="title">
+	Exquisite Clock Admin
+  </div>
+  <div class="container">
+	
 
 	<div id="new_numbers">
-    <h1> New Numbers </h1>
+		
+	<h1> New Numbers </h1>
 	{% for number in new_numbers %}
-        <div class="number">
-			<img src='{{base_url}}{{ number.url }}'>
-			
-			<strong>New:</strong>{{ number.new }}
-			<strong>Display:</strong>{{ number.display }}
-			<strong>Digit:</strong>{{ number.digit }}
+        <div class="number_holder">
+			<div class="number">
+				
+				<!-- {{ number.digit }} -->
+			    {% if number.display %}
+					<img class="img img_enabled" src='{{base_url}}{{ number.url }}'>
+					<a href="/disable/{{ number.url }}"><div class="button enabled"></div></a>
+				{% else %}
+					<img class="img img_disabled" src='{{base_url}}{{ number.url }}'>
+					<a href="/enable/{{ number.url }}"><div class="button disabled"></div></a>
+				{% endif %}
+			</div>
 		</div>
     {% endfor %}
-	
+	</div>
+
+	<!-- <div id="all_numbers">
+	<h1> All Numbers </h1>
+	{% for number in old_numbers %}
+        <div class="number_holder">
+			<div class="number">
+				<img class="img" src='{{base_url}}{{ number.url }}'>
+			
+				<strong>New:</strong>{{ number.new }}
+				<strong>Display:</strong>{{ number.display }}
+				<strong>Digit:</strong>{{ number.digit }}
+			</div>
+		</div>
+    {% endfor %} -->
 	</div>
 
 
+	</div>
+
+	</div>
 <!--     <a href="{{ url }}">{{ url_linktext }}</a> -->
 
 </body>
