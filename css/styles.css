@@ -24,11 +24,6 @@ img {
     background:black;
 }
 
-@font-face {
-	font-family: League;
-	src: url('../fonts/League_Gothic.otf');
-}
-
 .title {
     font-family: Georgia,"Times New Roman",serif;
    	font-size: 12px;
@@ -55,14 +50,12 @@ img {
 }
 
 h1 {
-    padding-bottom:1px;
-    margin-bottom:1px;
+    margin-bottom:10px;
     font-family: Georgia,"Times New Roman",serif;
    	font-size: 12px;
    	font-weight: bold;
    	color: black;
    	line-height: 22px;
-   	margin: 0;
    	text-transform: uppercase;
    	letter-spacing: 1px;
     width:970px;

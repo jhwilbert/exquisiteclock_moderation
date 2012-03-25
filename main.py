@@ -14,6 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+from google.appengine.api import users
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp import util
 from google.appengine.api import mail
@@ -45,7 +46,9 @@ def getJSON():
     # json_output = simplejson.loads(content)
     # return json_output
     
-class LoadAllImages(webapp.RequestHandler):
+
+
+class load_all(webapp.RequestHandler):
     def get(self):
         images_store = ImagesStore()      
         for n in range(0, 10):
@@ -56,7 +59,7 @@ class LoadAllImages(webapp.RequestHandler):
                     images_store.get_or_insert(keyname, display=True,new=False,digit= n,url=x.get("URL"))             
 
 
-class LoadNewImages(webapp.RequestHandler):
+class load_new(webapp.RequestHandler):
     def get(self):
         images_store = ImagesStore()     
         for n in range(0, 10):
@@ -71,15 +74,22 @@ class LoadNewImages(webapp.RequestHandler):
 # VIEWS
 ###############################################################################################
 
+PAGESIZE = 10
 
 class ViewNumbers(webapp.RequestHandler):
+    
     def get(self):
-        
         images_store = ImagesStore()
-        old_numbers = images_store.all().filter('new =', False)
+         
+        #http://code.google.com/p/he3-appengine-lib/wiki/PagedQuery
+                    
+        # new numbers
+       
         new_numbers = images_store.all().filter('new =', True)
         
-        
+        # old numbers
+        old_numbers = images_store.all().filter('new =', False).fetch(PAGESIZE + 1)
+
         template_values = {
             'new_numbers' : new_numbers,
             'base_url' : IMAGE_PATH,
@@ -116,47 +126,74 @@ class disable(webapp.RequestHandler):
         self.redirect("/admin")
         self.response.out.write(True)
         
-# class generate_json(webapp.RequestHandler):
-#     def get(self):
-#         #print ""
-#         images_store = ImagesStore()
-#         display_list = images_store.all().filter("display =", False)
-#         
-#         display_dict = {}
-#         image_list = []
-#         
-#         
-#         for image in display_list:
-#             print image.digit
-#             print image.url
-#             #image_list = [{"URL" :image.url }]
-#             display_dict[image.digit] = image_list.append{"URL" :image.url} # empty list
-#         
-#         # for n in range(0, 10):
-#         #     for number in display_list:
-#         #         display_dict[n] = image_list # empty list
-#         # #for number in display_list:
-#         #    #print number.url
-#         
-#         result = simplejson.dumps(display_dict)
-# 
-#         self.response.headers['Content-Type'] = 'application/json'
-#         self.response.out.write(result)
-#                                          
+class generate_json(webapp.RequestHandler):
+    def get(self):
+        #print ""
+        images_store = ImagesStore()
+        display_list = images_store.all().filter("display =", True)
+        
+        index = 0
+
+        display_dict = {}
+        image_dict = {}
+        image_list = []
+        json_list = []
+        #print ''
+        for i in range(0,10):
+            image_list.append(images_store.all().filter("digit =", i).filter("display =", True))
+        
+            for image in image_list[i]:
+                json_list.append({"URL": image.url})
+                
+            display_dict[i] = json_list
+            print i
+            print "--------------------"
+        print display_dict[i]
+
+            
+        # result = simplejson.dumps(display_dict)
+        # self.response.headers['Content-Type'] = 'application/json'
+        # self.response.out.write(result)
+        #print image_list
+        
+
+        # print display_list
+        # 
+        # for image in display_list:
+        #     print image.digit
+        #     print image.url
+        # 
+        # for image in display_list:
+        #     print image.digit
+        #     print image.url
+        #     #image_list = [{"URL" :image.url }]
+        #     display_dict[image.digit] = image_list.append{"URL" :image.url} # empty list
+        
+        # # for n in range(0, 10):
+        # #     for number in display_list:
+        # #         display_dict[n] = image_list # empty list
+        # # #for number in display_list:
+        # #    #print number.url
+        # 
+        # result = simplejson.dumps(display_dict)
+        # 
+        # self.response.headers['Content-Type'] = 'application/json'
+        # self.response.out.write(result)
+                                         
+
                                      
 class MainHandler(webapp.RequestHandler):
     def get(self):
-        pass
-
-
+        self.redirect("/admin")
 
 def main():
     application = webapp.WSGIApplication([('/', MainHandler),
-                                        ('/loadallimages', load_all),
-                                        ('/loadnewimages', load_new),
+                                        ('/load_all', load_all),
+                                        ('/load_new', load_new),
                                         ('/admin', ViewNumbers),
                                         ('/enable/([^/]+)', enable),
                                         ('/disable/([^/]+)', disable),
+                                        ('/json', generate_json),
                                         
                                         ],
                                          debug=True)
