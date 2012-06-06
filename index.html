@@ -26,16 +26,16 @@
 		
 	<h1> New Numbers </h1>
 
-	<a href="http://localhost:8080/admin?page={{ prev_page }}">Previous</a>&nbsp|&nbsp
+	<a href="/admin?page={{ prev_page }}">Previous</a>&nbsp|&nbsp
 	{% for i in total_pages %}
 		
 		{% ifequal i curr_page %}
  	 		<strong>{{ i }}</strong>
 		{% else %}
-			<a href="http://localhost:8080/admin?page={{ i }}">{{ i }}</a>
+			<a href="/admin?page={{ i }}">{{ i }}</a>
 		{% endifequal %}
 	{% endfor %}
-	&nbsp|&nbsp<a href="http://localhost:8080/admin?page={{ next_page }}">Next</a>
+	&nbsp|&nbsp<a href="/admin?page={{ next_page }}">Next</a>
 
 
 	{% for number in new_numbers %}

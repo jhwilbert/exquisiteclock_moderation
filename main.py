@@ -96,8 +96,6 @@ class ViewNumbers(webapp.RequestHandler):
 
         next_page = int(curr_page) + 1
         prev_page = int(curr_page) + 1
-
-        #http://code.google.com/p/he3-appengine-lib/wiki/PagedQuery
                     
         # new numbers  
         new_numbers = images_store.all().filter('new =', True)
@@ -106,7 +104,6 @@ class ViewNumbers(webapp.RequestHandler):
         old_numbers_query = images_store.all().filter('new =', False)
         old_numbers_pagedQuery = PagedQuery(old_numbers_query,PAGESIZE)
         old_numbers = old_numbers_pagedQuery.fetch_page(curr_page)
-        print curr_page
         
         template_values = {
             'curr_page' : curr_page,
