@@ -60,7 +60,7 @@ class load_all(webapp.RequestHandler):
             #print "DIGIT", n
             for x in getJSON()[str(n)]:
                 if len(x.get("URL")) != 0: 
-                    keyname = x.get("URL")
+                    keyname = x.get("URL")[:-4]
                     images_store.get_or_insert(keyname, display=True,new=False,digit= n,url=x.get("URL"))             
 
 
@@ -71,9 +71,8 @@ class load_new(webapp.RequestHandler):
             #print "DIGIT", n
             for x in getJSON()[str(n)]:
                 if x.has_key("N"):
-                    keyname = x.get("URL")
+                    keyname = x.get("URL")[:-4]
                     images_store.get_or_insert(keyname, display=False,new=True,digit= n,url=x.get("URL"))
-
 
 ###############################################################################################
 # VIEWS

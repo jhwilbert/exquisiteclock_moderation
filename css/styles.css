@@ -95,6 +95,7 @@ img {
   font-size:14px;
   font-weight:bold;
   font-color:white;
+  margin-bottom:40px;
 }
 
 #pagination_next {
@@ -165,8 +166,8 @@ h1 {
 }
 
 .img_disabled {
-    opacity:0.04;
-    filter:alpha(opacity=4); /* For IE8 and earlier */
+    opacity:0.06;
+    filter:alpha(opacity=6); /* For IE8 and earlier */
 }
 
 .img_enabled {
