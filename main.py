@@ -88,11 +88,19 @@ class ViewNumbers(webapp.RequestHandler):
 
         # get page
         curr_page = self.request.get('page')
+        display_digit = self.request.get('digit')
         
+        # page var
         if curr_page == '':
             curr_page = 1
         else:
             curr_page = int(curr_page)
+
+        # handle digit var
+        if display_digit == '':
+            display_digit = 0
+        else:
+            display_digit = int(display_digit)
 
         next_page = int(curr_page) + 1
         prev_page = int(curr_page) + 1
@@ -101,15 +109,17 @@ class ViewNumbers(webapp.RequestHandler):
         new_numbers = images_store.all().filter('new =', True)
         
         # old numbers
-        old_numbers_query = images_store.all().filter('new =', False)
+        old_numbers_query = images_store.all().filter('new =', False).filter('digit =',display_digit)
         old_numbers_pagedQuery = PagedQuery(old_numbers_query,PAGESIZE)
         old_numbers = old_numbers_pagedQuery.fetch_page(curr_page)
         
         template_values = {
+            'curr_digit' : display_digit,
+            'has_nextpage' : old_numbers_pagedQuery.has_page(next_page),
             'curr_page' : curr_page,
             'prev_page' : prev_page,
             'next_page' : next_page,
-            'total_pages' : xrange(old_numbers_pagedQuery.page_count()),
+            'total_pages' : xrange(1,old_numbers_pagedQuery.page_count()+1,1),
             'new_numbers' : new_numbers,
             'base_url' : IMAGE_PATH,
             'current_domain' : CURRENT_DOMAIN,
