@@ -14,20 +14,25 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+
 from google.appengine.api import users
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp import util
 from google.appengine.api import mail
 from google.appengine.ext.webapp import template
-
+from paging import PagedQuery
 from models import ImagesStore
 import urllib
 import simplejson
 import os
 
+
+
 IMAGE_PATH = "http://www.exquisiteclock.org/v1/adm/web/clock/"
 JSON_PATH = "http://www.exquisiteclock.org/clock/feed/feed.json"
 CURRENT_DOMAIN ="http://localhost:8080"
+
+
 
 ###############################################################################################
 # DATA LOADERS
@@ -74,23 +79,40 @@ class load_new(webapp.RequestHandler):
 # VIEWS
 ###############################################################################################
 
-PAGESIZE = 10
+PAGESIZE = 50
 
 class ViewNumbers(webapp.RequestHandler):
     
     def get(self):
         images_store = ImagesStore()
-         
+
+        # get page
+        curr_page = self.request.get('page')
+        
+        if curr_page == '':
+            curr_page = 1
+        else:
+            curr_page = int(curr_page)
+
+        next_page = int(curr_page) + 1
+        prev_page = int(curr_page) + 1
+
         #http://code.google.com/p/he3-appengine-lib/wiki/PagedQuery
                     
-        # new numbers
-       
+        # new numbers  
         new_numbers = images_store.all().filter('new =', True)
         
         # old numbers
-        old_numbers = images_store.all().filter('new =', False).fetch(PAGESIZE + 1)
-
+        old_numbers_query = images_store.all().filter('new =', False)
+        old_numbers_pagedQuery = PagedQuery(old_numbers_query,PAGESIZE)
+        old_numbers = old_numbers_pagedQuery.fetch_page(curr_page)
+        print curr_page
+        
         template_values = {
+            'curr_page' : curr_page,
+            'prev_page' : prev_page,
+            'next_page' : next_page,
+            'total_pages' : xrange(old_numbers_pagedQuery.page_count()),
             'new_numbers' : new_numbers,
             'base_url' : IMAGE_PATH,
             'current_domain' : CURRENT_DOMAIN,

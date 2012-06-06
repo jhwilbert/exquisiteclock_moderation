@@ -25,6 +25,19 @@
 	<div id="new_numbers">
 		
 	<h1> New Numbers </h1>
+
+	<a href="http://localhost:8080/admin?page={{ prev_page }}">Previous</a>&nbsp|&nbsp
+	{% for i in total_pages %}
+		
+		{% ifequal i curr_page %}
+ 	 		<strong>{{ i }}</strong>
+		{% else %}
+			<a href="http://localhost:8080/admin?page={{ i }}">{{ i }}</a>
+		{% endifequal %}
+	{% endfor %}
+	&nbsp|&nbsp<a href="http://localhost:8080/admin?page={{ next_page }}">Next</a>
+
+
 	{% for number in new_numbers %}
         <div class="number_holder">
 			<div class="number">
