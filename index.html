@@ -25,10 +25,10 @@
 						<!-- {{ number.digit }} -->
 					    {% if number.display %}
 							<img class="img img_enabled" src='{{base_url}}{{ number.url }}'>
-							<a href="/disable/{{ number.url }}"><div class="button enabled"></div></a>
+							<div class="tab"><div class="number_text">{{ number.digit }}</div><a href="/disable/{{ number.url }}"><div class="button enabled"></div></a> </div>
 						{% else %}
 							<img class="img img_disabled" src='{{base_url}}{{ number.url }}'>
-							<a href="/enable/{{ number.url }}"><div class="button disabled"></div></a>
+							<div class="tab"><div class="number_text">{{ number.digit }}</div><a href="/enable/{{ number.url }}"><div class="button disabled"></div></a> </div>
 						{% endif %}
 					</div>
 				</div>
@@ -40,15 +40,16 @@
 	<h1> ALL NUMBERS </h1>
 
 	<select id="digit_selector" onchange="if(this.options[this.selectedIndex].value != ''){window.top.location.href=this.options[this.selectedIndex].value}">
-		<option value="/admin?page=1&digit=1">1</option>
-		<option value="/admin?page=1&digit=2">2</option>
-		<option value="/admin?page=1&digit=3">3</option>
-		<option value="/admin?page=1&digit=4">4</option>
-		<option value="/admin?page=1&digit=5">5</option>
-		<option value="/admin?page=1&digit=6">6</option>
-		<option value="/admin?page=1&digit=7">7</option>
-		<option value="/admin?page=1&digit=8">8</option>
-		<option value="/admin?page=1&digit=">9</option>
+		
+		<option {% ifequal 1 curr_digit %} selected="selected" {% endifequal %} value="/admin?page=1&digit=1">1</option>
+		<option {% ifequal 2 curr_digit %} selected="selected" {% endifequal %} value="/admin?page=1&digit=2">2</option>
+		<option {% ifequal 3 curr_digit %} selected="selected" {% endifequal %} value="/admin?page=1&digit=3">3</option> 
+		<option {% ifequal 4 curr_digit %} selected="selected" {% endifequal %} value="/admin?page=1&digit=4">4</option>
+		<option {% ifequal 5 curr_digit %} selected="selected" {% endifequal %} value="/admin?page=1&digit=5">5</option>
+		<option {% ifequal 6 curr_digit %} selected="selected" {% endifequal %} value="/admin?page=1&digit=6">6</option>
+		<option {% ifequal 7 curr_digit %} selected="selected" {% endifequal %} value="/admin?page=1&digit=7">7</option>
+		<option {% ifequal 8 curr_digit %} selected="selected" {% endifequal %} value="/admin?page=1&digit=8">8</option>
+		<option {% ifequal 9 curr_digit %} selected="selected" {% endifequal %} value="/admin?page=1&digit=9">9</option>
 	</select>
 
 		<div id="all_numbers_container">
@@ -56,14 +57,14 @@
 		        <div class="number_holder">
 					<div class="number">
 					    {% if number.display %}
-					
 							<img class="img img_enabled" src='{{base_url}}{{ number.url }}'>
-							<a href="/disable/{{ number.url }}"><div class="button enabled"></div></a>
+							<div class="tab"><div class="number_text">{{ number.digit }}</div><a href="/disable/{{ number.url }}"><div class="button enabled"></div></a> </div>
 						{% else %}
 							<img class="img img_disabled" src='{{base_url}}{{ number.url }}'>
-							<a href="/enable/{{ number.url }}"><div class="button disabled"></div></a>
+							<div class="tab"><div class="number_text">{{ number.digit }}</div><a href="/enable/{{ number.url }}"><div class="button disabled"></div></a> </div>
 						{% endif %}
 					</div>
+					
 				</div>
 		    {% endfor %}
 	 	</div>   
