@@ -156,55 +156,38 @@ class disable(webapp.RequestHandler):
         
 class generate_json(webapp.RequestHandler):
     def get(self):
-        #print ""
-        images_store = ImagesStore()
-        display_list = images_store.all().filter("display =", True)
-        
-        index = 0
 
-        display_dict = {}
-        image_dict = {}
-        image_list = []
-        json_list = []
-        #print ''
-        for i in range(0,10):
-            image_list.append(images_store.all().filter("digit =", i).filter("display =", True))
+        images_store = ImagesStore()
         
-            for image in image_list[i]:
-                json_list.append({"URL": image.url})
+        numbers_dict = {}
+        
+        # 0's
+        zeroes_list = []
+        zeroes = images_store.all().filter("digit =", 0).filter("display =", True)
+        for zero in zeroes:
+            zeroes_list.append(zero.url)
+
+        print zeroes_list
+
+        
+
+        #zeroes_db = images_store.all().filter("digit =", 0).filter("display =", True)
+        
+        #for zero in zeroes_db:
+        #    zeroes_list.append(zero.url)
+
+
+
+            #for image in image_list[i]:
+            #    json_list.append({"URL": image.url})
                 
-            display_dict[i] = json_list
-            print i
-            print "--------------------"
-        print display_dict[i]
+            #display_dict[i] = json_list
+            #print i
+            #print "--------------------"
+        #print display_dict[i]
 
             
         # result = simplejson.dumps(display_dict)
-        # self.response.headers['Content-Type'] = 'application/json'
-        # self.response.out.write(result)
-        #print image_list
-        
-
-        # print display_list
-        # 
-        # for image in display_list:
-        #     print image.digit
-        #     print image.url
-        # 
-        # for image in display_list:
-        #     print image.digit
-        #     print image.url
-        #     #image_list = [{"URL" :image.url }]
-        #     display_dict[image.digit] = image_list.append{"URL" :image.url} # empty list
-        
-        # # for n in range(0, 10):
-        # #     for number in display_list:
-        # #         display_dict[n] = image_list # empty list
-        # # #for number in display_list:
-        # #    #print number.url
-        # 
-        # result = simplejson.dumps(display_dict)
-        # 
         # self.response.headers['Content-Type'] = 'application/json'
         # self.response.out.write(result)
                                          
