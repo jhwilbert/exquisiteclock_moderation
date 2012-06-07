@@ -29,8 +29,8 @@ import os
 
 IMAGE_PATH = "http://www.exquisiteclock.org/v1/adm/web/clock/"
 JSON_PATH = "http://www.exquisiteclock.org/clock/feed/feed.json"
-CURRENT_DOMAIN ="http://localhost:8080"
-#CURRENT_DOMAIN ="http://exquisiteclockapi.appspot.com"
+#CURRENT_DOMAIN ="http://localhost:8080"
+CURRENT_DOMAIN ="http://exquisiteclockapi.appspot.com"
 
     
 ###############################################################################################
@@ -132,13 +132,9 @@ class generate_json(webapp.RequestHandler):
         self.response.headers['Content-Type'] = 'application/json'
         self.response.out.write(result)
              
-class MainHandler(webapp.RequestHandler):
-    def get(self):
-        self.redirect("/admin")
 
 def main():
-    application = webapp.WSGIApplication([('/', MainHandler),
-                                        ('/admin', ViewNumbers),
+    application = webapp.WSGIApplication([('/', ViewNumbers),
                                         ('/enable/([^/]+)', enable),
                                         ('/disable/([^/]+)', disable),
                                         ('/json', generate_json),
