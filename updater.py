@@ -15,6 +15,7 @@
 # limitations under the License.
 #
 
+from google.appengine.api import mail
 from google.appengine.api import backends
 from models import ImagesStore
 from google.appengine.ext import webapp
@@ -63,22 +64,37 @@ class load_new(webapp.RequestHandler):
         self.response.out.write("<html><body>")
         self.response.out.write("<p>Loading recent numbers from Exquisite Clock</p>")
         self.response.out.write("</body></html>")
-            
+        
+        
+        new_numbers = 0
         images_store = ImagesStore()     
         for n in range(0, 10):
             for x in get_json()[str(n)]:
                 if x.has_key("N"):
+                    new_numbers = new_numbers+1
                     keyname = x.get("URL")[:-4]
                     images_store.get_or_insert(keyname, display=False,new=True,digit= n,url=x.get("URL"))
+        if new_numbers > 0:
+            send_mail()
 
+class send_mail():
+    mail.send_mail(sender="ExquisiteClock <jhwilbert@gmail.com>",
+                  to="Joao Wilbert <jhwilbert@gmail.com>",
+                  subject="Exquisite Clock Moderation",
+                  body="""
+    New numbers have been uploaded to the clock.
+
+    """)
+    
 ###############################################################################################
 # HANDLERS
 ###############################################################################################                   
                     
 def main():             
     application = webapp.WSGIApplication([('/backend/load_all', load_all),
-                                        ('/backend/load_new', load_new)],
-                                        debug=True)
+                                          ('/backend/load_new', load_new)
+                                          ],
+                                          debug=True)
     util.run_wsgi_app(application)
 
 if __name__ == '__main__':
