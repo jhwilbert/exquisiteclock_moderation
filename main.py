@@ -57,10 +57,14 @@ class load_all(webapp.RequestHandler):
     def get(self):
         images_store = ImagesStore()      
         for n in range(0, 10):
-            #print "DIGIT", n
+            print "-----------------GETTING DIGIT---------------", n
+            print ""
+            print ""
             for x in getJSON()[str(n)]:
                 if len(x.get("URL")) != 0: 
                     keyname = x.get("URL")[:-4]
+                    print "Inserting",x.get("URL")
+                    print ""
                     images_store.get_or_insert(keyname, display=True,new=False,digit= n,url=x.get("URL"))             
 
 
@@ -155,44 +159,24 @@ class disable(webapp.RequestHandler):
         self.response.out.write(True)
         
 class generate_json(webapp.RequestHandler):
-    def get(self):
-
-        images_store = ImagesStore()
-        
-        numbers_dict = {}
-        
-        # 0's
-        zeroes_list = []
-        zeroes = images_store.all().filter("digit =", 0).filter("display =", True)
-        for zero in zeroes:
-            zeroes_list.append(zero.url)
-
-        print zeroes_list
-
-        
-
-        #zeroes_db = images_store.all().filter("digit =", 0).filter("display =", True)
-        
-        #for zero in zeroes_db:
-        #    zeroes_list.append(zero.url)
-
-
-
-            #for image in image_list[i]:
-            #    json_list.append({"URL": image.url})
-                
-            #display_dict[i] = json_list
-            #print i
-            #print "--------------------"
-        #print display_dict[i]
-
+    def getnumbers(self,query):
+        entrylist = []
+        for entry in query:
+            number = { "URL" : entry.url}
+            entrylist.append(number)
+        return entrylist
             
-        # result = simplejson.dumps(display_dict)
-        # self.response.headers['Content-Type'] = 'application/json'
-        # self.response.out.write(result)
-                                         
-
-                                     
+        
+    def get(self):
+        images_store = ImagesStore()
+        all_digits = {}
+        for j in range(10):
+            all_digits[j] = self.getnumbers(images_store.all().filter("digit =", j).filter("display =", True))
+        result = simplejson.dumps(all_digits)
+        
+        self.response.headers['Content-Type'] = 'application/json'
+        self.response.out.write(result)
+             
 class MainHandler(webapp.RequestHandler):
     def get(self):
         self.redirect("/admin")
