@@ -28,12 +28,19 @@ import settings
 ###############################################################################################
 
 def get_json():
+    """
+    Returns JSON object to be parsed
+    """
     response = urllib.urlopen(settings.env_vars["JSON_PATH"])
     content = response.read()
     json_output = simplejson.loads(content)
     return json_output
     
 class load_all(webapp.RequestHandler):
+    """
+    Loads all numbers from Exquisite Clock JSON output
+    To be called using backend: http://localhost:9199/backend/load_all
+    """    
     def get(self):
         self.response.out.write("<html><body>")
         self.response.out.write("<p>Loading all numbers from Exquisite Clock</p>")
@@ -46,8 +53,12 @@ class load_all(webapp.RequestHandler):
                     keyname = x.get("URL")[:-4]
                     images_store.get_or_insert(keyname, display=True,new=False,digit= n,url=x.get("URL"))             
 
-
 class load_new(webapp.RequestHandler):
+    """
+    Loads recent numbers from Exquisite Clock JSON output
+    To be called using backend: http://localhost:9199/backend/load_new
+    """
+    
     def get(self):
         self.response.out.write("<html><body>")
         self.response.out.write("<p>Loading recent numbers from Exquisite Clock</p>")
