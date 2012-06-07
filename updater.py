@@ -78,6 +78,10 @@ class load_new(webapp.RequestHandler):
             send_mail()
 
 class send_mail():
+    """
+    Notifies recipients of new number arrivals. TODO: Implement multiple recipients using dict.
+    """
+    
     mail.send_mail(sender="ExquisiteClock <jhwilbert@gmail.com>",
                   to="Joao Wilbert <jhwilbert@gmail.com>",
                   subject="Exquisite Clock Moderation",
