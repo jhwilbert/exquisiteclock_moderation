@@ -21,29 +21,18 @@ from google.appengine.ext import webapp
 from google.appengine.ext.webapp import util
 import urllib
 import simplejson
-
-IMAGE_PATH = "http://www.exquisiteclock.org/v1/adm/web/clock/"
-JSON_PATH = "http://www.exquisiteclock.org/clock/feed/feed.json"
+import settings
 
 ###############################################################################################
 # DATA LOADERS
 ###############################################################################################
 
 def getJSON():
-    # Reading Local
-    # f = open('feed_sample.json', 'r')
-    # content = f.read()
-    # json_output = simplejson.loads(content)
-    # return json_output
-
-    # Reading Remote
-    feed_url = "http://www.exquisiteclock.org/clock/feed/feed.json"
-    response = urllib.urlopen(feed_url)
+    response = urllib.urlopen(settings.env_vars["JSON_PATH"])
     content = response.read()
     json_output = simplejson.loads(content)
     return json_output
     
-
 class load_all(webapp.RequestHandler):
     def get(self):
         images_store = ImagesStore()      

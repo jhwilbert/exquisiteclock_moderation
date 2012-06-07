@@ -26,11 +26,9 @@ from models import ImagesStore
 import urllib
 import simplejson
 import os
+import logging
+import settings
 
-IMAGE_PATH = "http://www.exquisiteclock.org/v1/adm/web/clock/"
-JSON_PATH = "http://www.exquisiteclock.org/clock/feed/feed.json"
-#CURRENT_DOMAIN ="http://localhost:8080"
-CURRENT_DOMAIN ="http://exquisiteclockapi.appspot.com"
 
     
 ###############################################################################################
@@ -42,6 +40,11 @@ PAGESIZE = 50
 class ViewNumbers(webapp.RequestHandler):
     
     def get(self):
+        
+        print ""
+        print 
+        
+        
         images_store = ImagesStore()
 
         # get page
@@ -79,8 +82,8 @@ class ViewNumbers(webapp.RequestHandler):
             'next_page' : next_page,
             'total_pages' : xrange(1,old_numbers_pagedQuery.page_count()+1,1),
             'new_numbers' : new_numbers,
-            'base_url' : IMAGE_PATH,
-            'current_domain' : CURRENT_DOMAIN,
+            'base_url' : settings.env_vars["IMAGE_PATH"],
+            'current_domain' : settings.env_vars["BASE_URL"],
             'old_numbers' : old_numbers,
         }
         

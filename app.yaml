@@ -18,11 +18,14 @@ handlers:
   static_files: favicon.ico
   upload: favicon\.ico
 
+- url: /feed_sample\.json
+  static_files: feed_sample.json
+  upload: feed_sample\.json
+
 - url: /backend/.*
   script: updater.py
     
 - url: /.*
   script: main.py
-
 
 
