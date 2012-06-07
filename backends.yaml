@@ -1,4 +1,4 @@
 backends:
 - name: crawler
-  instances: 2
+  instances: dynamic
   options: public

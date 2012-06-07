@@ -28,15 +28,44 @@ import simplejson
 import os
 import logging
 import settings
+import base64
+import passwd
 
-    
+PAGESIZE = 50
+
+###############################################################################################
+# DECORATORS
+###############################################################################################
+
+def basicAuth(func):
+  def callf(webappRequest, *args, **kwargs):
+    auth_header = webappRequest.request.headers.get('Authorization')
+
+    if auth_header == None:
+      webappRequest.response.set_status(401, message="Authorization Required")
+      webappRequest.response.headers['WWW-Authenticate'] = 'Basic realm="Secure Area"'
+    else:
+      # Isolate the encoded user/passwd and decode it
+      auth_parts = auth_header.split(' ')
+      user_pass_parts = base64.b64decode(auth_parts[1]).split(':')
+      user_arg = user_pass_parts[0]
+      pass_arg = user_pass_parts[1]
+
+      if user_arg != passwd.data["login"] or pass_arg != passwd.data["password"]:
+        webappRequest.response.set_status(401, message="Authorization Required")
+        webappRequest.response.headers['WWW-Authenticate'] = 'Basic realm="Secure Area"'
+        # Rendering a 401 Error page is a good way to go...
+      else:
+        return func(webappRequest, *args, **kwargs)
+
+  return callf
+      
 ###############################################################################################
 # VIEWS
 ###############################################################################################
 
-PAGESIZE = 50
-
 class ViewNumbers(webapp.RequestHandler):
+    @basicAuth
     
     def get(self):
         
@@ -82,7 +111,6 @@ class ViewNumbers(webapp.RequestHandler):
             'old_numbers' : old_numbers,
         }
         
-        
         path = os.path.join(os.path.dirname(__file__), 'index.html')
         self.response.out.write(template.render(path, template_values))
         
@@ -119,7 +147,6 @@ class generate_json(webapp.RequestHandler):
             entrylist.append(number)
         return entrylist
             
-        
     def get(self):
         images_store = ImagesStore()
         all_digits = {}
@@ -131,6 +158,10 @@ class generate_json(webapp.RequestHandler):
         self.response.out.write(result)
 
 
+###############################################################################################
+# MAIN
+###############################################################################################
+  
 def main():
     application = webapp.WSGIApplication([('/', ViewNumbers),
                                         ('/enable/([^/]+)', enable),
