@@ -29,7 +29,6 @@ import os
 import logging
 import settings
 
-
     
 ###############################################################################################
 # VIEWS
@@ -40,10 +39,6 @@ PAGESIZE = 50
 class ViewNumbers(webapp.RequestHandler):
     
     def get(self):
-        
-        print ""
-        print 
-        
         
         images_store = ImagesStore()
 
@@ -134,7 +129,7 @@ class generate_json(webapp.RequestHandler):
         
         self.response.headers['Content-Type'] = 'application/json'
         self.response.out.write(result)
-             
+
 
 def main():
     application = webapp.WSGIApplication([('/', ViewNumbers),

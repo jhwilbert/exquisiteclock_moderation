@@ -43,16 +43,16 @@
 	<h1> ALL NUMBERS </h1>
 
 	<select id="digit_selector" onchange="if(this.options[this.selectedIndex].value != ''){window.top.location.href=this.options[this.selectedIndex].value}">
-		<option {% ifequal 1 curr_digit %} selected="selected" {% endifequal %} value="/admin?page=1&digit=0">0</option>
-		<option {% ifequal 1 curr_digit %} selected="selected" {% endifequal %} value="/admin?page=1&digit=1">1</option>
-		<option {% ifequal 2 curr_digit %} selected="selected" {% endifequal %} value="/admin?page=1&digit=2">2</option>
-		<option {% ifequal 3 curr_digit %} selected="selected" {% endifequal %} value="/admin?page=1&digit=3">3</option> 
-		<option {% ifequal 4 curr_digit %} selected="selected" {% endifequal %} value="/admin?page=1&digit=4">4</option>
-		<option {% ifequal 5 curr_digit %} selected="selected" {% endifequal %} value="/admin?page=1&digit=5">5</option>
-		<option {% ifequal 6 curr_digit %} selected="selected" {% endifequal %} value="/admin?page=1&digit=6">6</option>
-		<option {% ifequal 7 curr_digit %} selected="selected" {% endifequal %} value="/admin?page=1&digit=7">7</option>
-		<option {% ifequal 8 curr_digit %} selected="selected" {% endifequal %} value="/admin?page=1&digit=8">8</option>
-		<option {% ifequal 9 curr_digit %} selected="selected" {% endifequal %} value="/admin?page=1&digit=9">9</option>
+		<option {% ifequal 1 curr_digit %} selected="selected" {% endifequal %} value="/?page=1&digit=0">0</option>
+		<option {% ifequal 1 curr_digit %} selected="selected" {% endifequal %} value="/?page=1&digit=1">1</option>
+		<option {% ifequal 2 curr_digit %} selected="selected" {% endifequal %} value="/?page=1&digit=2">2</option>
+		<option {% ifequal 3 curr_digit %} selected="selected" {% endifequal %} value="/?page=1&digit=3">3</option> 
+		<option {% ifequal 4 curr_digit %} selected="selected" {% endifequal %} value="/?page=1&digit=4">4</option>
+		<option {% ifequal 5 curr_digit %} selected="selected" {% endifequal %} value="/?page=1&digit=5">5</option>
+		<option {% ifequal 6 curr_digit %} selected="selected" {% endifequal %} value="/?page=1&digit=6">6</option>
+		<option {% ifequal 7 curr_digit %} selected="selected" {% endifequal %} value="/?page=1&digit=7">7</option>
+		<option {% ifequal 8 curr_digit %} selected="selected" {% endifequal %} value="/?page=1&digit=8">8</option>
+		<option {% ifequal 9 curr_digit %} selected="selected" {% endifequal %} value="/?page=1&digit=9">9</option>
 	</select>
 
 		<div id="all_numbers_container">
@@ -74,18 +74,18 @@
 	</div> <!-- end of all numbers !-->
 	
 	<div id="pagination_bar" class="pagination">
-		<div id="pagination_prev"><a href="/admin?page={{ prev_page }}&digit={{ curr_digit }}">Previous</a></div>
+		<div id="pagination_prev"><a href="/?page={{ prev_page }}&digit={{ curr_digit }}">Previous</a></div>
 
 		{% for i in total_pages %}	
 			{% ifequal i curr_page %}
 	 	 		<strong>{{ i }}</strong>&nbsp;&nbsp;&nbsp;
 			{% else %}
-				<a href="/admin?page={{ i }}&digit={{ curr_digit }}">{{ i }}</a>&nbsp;&nbsp;&nbsp;
+				<a href="/?page={{ i }}&digit={{ curr_digit }}">{{ i }}</a>&nbsp;&nbsp;&nbsp;
 			{% endifequal %}
 		{% endfor %}
 
 		{% if has_nextpage %}
-			<div id="pagination_next"><a href="/admin?page={{ next_page }}&digit={{ curr_digit }}">Next</a></div>
+			<div id="pagination_next"><a href="/?page={{ next_page }}&digit={{ curr_digit }}">Next</a></div>
 		{% endif %}
 
 	</div>  <!-- end of pagination !-->
