@@ -5,7 +5,6 @@ api_version: 1
 
 handlers:
 
-      
 - url: /js
   static_dir: js
   
@@ -19,7 +18,11 @@ handlers:
   static_files: favicon.ico
   upload: favicon\.ico
 
-- url: .*
+- url: /backend/.*
+  script: updater.py
+    
+- url: /.*
   script: main.py
-  
+
+
 

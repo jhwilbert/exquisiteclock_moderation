@@ -2,4 +2,6 @@ cron:
 - description: new daily summary job
   url: /load_new
   schedule: every 10 minutes
+  target: crawler
+  
   
