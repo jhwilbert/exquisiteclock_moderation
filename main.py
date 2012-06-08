@@ -126,7 +126,7 @@ class enable(webapp.RequestHandler):
         images_store = images_store.get_by_key_name(img_key)
         images_store.display = True
         images_store.put()
-        self.redirect("/admin")
+        self.redirect("/")
         self.response.out.write(True)
                
 class disable(webapp.RequestHandler):
@@ -136,7 +136,7 @@ class disable(webapp.RequestHandler):
         images_store = images_store.get_by_key_name(img_key)
         images_store.display = False
         images_store.put()
-        self.redirect("/admin")
+        self.redirect("/")
         self.response.out.write(True)
         
 class generate_json(webapp.RequestHandler):

@@ -65,7 +65,6 @@ class load_new(webapp.RequestHandler):
         self.response.out.write("<p>Loading recent numbers from Exquisite Clock</p>")
         self.response.out.write("</body></html>")
         
-        
         new_numbers = 0
         images_store = ImagesStore()     
         for n in range(0, 10):
