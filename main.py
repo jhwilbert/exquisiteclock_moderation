@@ -112,6 +112,7 @@ class ViewNumbers(webapp.RequestHandler):
             'total_pages' : xrange(1,old_numbers_pagedQuery.page_count()+1,1),
             'new_numbers' : new_numbers,
             'base_url' : settings.env_vars["IMAGE_PATH"],
+            'preview_url' : settings.env_vars["LARGE_IMAGE_PATH"],
             'current_domain' : settings.env_vars["BASE_URL"],
             'old_numbers' : old_numbers,
         }
