@@ -1,16 +1,20 @@
 
 $(document).ready(function() {
 	$(".number_link_disable").click(function(){
+	    console.debug("clicked on disabled");
 		$(this).removeClass("number_link_disable").addClass("number_link_enable");
 		$(this).children().removeClass("enabled").addClass("disabled");
-		$(this).parent().siblings().removeClass("img_enabled").addClass("img_disabled");
+		console.debug($(this).parent().siblings());
+		$(this).parent().siblings().children().removeClass("img_enabled").addClass("img_disabled");
  		$.get('disable/'+this.id);
 	});
 
 	$(".number_link_enable").click(function(){
+		console.debug("clicked on enabled");
 		$(this).removeClass("number_link_enable").addClass("number_link_disable");
 		$(this).children().removeClass("disabled").addClass("enabled");
-		$(this).parent().siblings().removeClass("img_disabled").addClass("img_enabled");
+		console.debug($(this).parent().siblings().children());
+		$(this).parent().siblings().children().removeClass("img_disabled").addClass("img_enabled");
  		$.get('enable/'+this.id);
 	});
 
