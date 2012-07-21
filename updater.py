@@ -23,19 +23,11 @@ from google.appengine.ext.webapp import util
 import urllib
 import simplejson
 import settings
+import jsonfetcher
 
 ###############################################################################################
 # DATA LOADERS
 ###############################################################################################
-
-def get_json():
-    """
-    Returns JSON object to be parsed
-    """
-    response = urllib.urlopen(settings.env_vars["JSON_PATH"])
-    content = response.read()
-    json_output = simplejson.loads(content)
-    return json_output
     
 class load_all(webapp.RequestHandler):
     """
@@ -47,34 +39,16 @@ class load_all(webapp.RequestHandler):
         self.response.out.write("<p>Loading all numbers from Exquisite Clock</p>")
         self.response.out.write("</body></html>")
         
-        images_store = ImagesStore()      
+        images_store = ImagesStore()
+        jsonobject = jsonfetcher.get_json()
+        
         for n in range(0, 10):
-            for x in get_json()[str(n)]:
+            for x in jsonobject[str(n)]:
                 if len(x.get("URL")) != 0: 
                     keyname = x.get("URL")[:-4]
                     images_store.get_or_insert(keyname, display=True,new=False,digit= n,url=x.get("URL"))             
 
-class load_new(webapp.RequestHandler):
-    """
-    Loads recent numbers from Exquisite Clock JSON output
-    To be called using backend: http://localhost:9199/backend/load_new
-    """
-    
-    def get(self):
-        self.response.out.write("<html><body>")
-        self.response.out.write("<p>Loading recent numbers from Exquisite Clock</p>")
-        self.response.out.write("</body></html>")
-        
-        new_numbers = 0
-        images_store = ImagesStore()     
-        for n in range(0, 10):
-            for x in get_json()[str(n)]:
-                if x.has_key("N"):
-                    new_numbers = new_numbers+1
-                    keyname = x.get("URL")[:-4]
-                    images_store.get_or_insert(keyname, display=False,new=True,digit= n,url=x.get("URL"))
-        if new_numbers > 0:
-            send_mail()
+
 
 class send_mail():
     """
@@ -94,8 +68,7 @@ class send_mail():
 ###############################################################################################                   
                     
 def main():             
-    application = webapp.WSGIApplication([('/backend/load_all', load_all),
-                                          ('/backend/load_new', load_new)
+    application = webapp.WSGIApplication([('/backend/load_all', load_all)
                                           ],
                                           debug=True)
     util.run_wsgi_app(application)

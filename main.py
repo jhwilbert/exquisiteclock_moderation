@@ -21,6 +21,8 @@ from google.appengine.ext import webapp
 from google.appengine.ext.webapp import util
 from google.appengine.api import mail
 from google.appengine.ext.webapp import template
+from google.appengine.api import urlfetch
+
 from paging import PagedQuery
 from models import ImagesStore
 import urllib
@@ -30,6 +32,7 @@ import logging
 import settings
 import base64
 import passwd
+import jsonfetcher
 
 PAGESIZE = 50
 
@@ -68,6 +71,8 @@ class ViewNumbers(webapp.RequestHandler):
     @basicAuth
     
     def get(self):
+        #print ""
+        #print settings.env_vars["JSON_PATH"]
         
         images_store = ImagesStore()
 
@@ -157,6 +162,41 @@ class generate_json(webapp.RequestHandler):
         self.response.headers['Content-Type'] = 'application/json'
         self.response.out.write(result)
 
+###############################################################################################
+# CRAWLER 
+###############################################################################################
+
+class load_new(webapp.RequestHandler):
+    """
+    Loads recent numbers from Exquisite Clock JSON output
+    To be called using backend: http://localhost:8080/load_new
+    """
+    
+    def get(self):
+        self.response.out.write("<html><body>")
+        self.response.out.write("<p>Loading recent numbers from Exquisite Clock</p>")
+        self.response.out.write("</body></html>")
+        
+        new_numbers = 0
+        
+        images_store = ImagesStore() 
+        
+        response = urllib.urlopen(settings.env_vars["JSON_PATH"])
+        content = response.read()
+        json_output = simplejson.loads(content)
+
+        # Parse JSON and populate datastore
+        for n in range(0, 10):
+            for x in json_output[str(n)]:
+                if x.has_key("N"):
+                    new_numbers = new_numbers+1
+                    keyname = x.get("URL")[:-4]
+                    images_store.get_or_insert(keyname, display=False,new=True,digit= n,url=x.get("URL"))
+        #if new_numbers > 0:
+            #send_mail()
+            
+    
+            
 
 ###############################################################################################
 # MAIN
@@ -166,6 +206,7 @@ def main():
     application = webapp.WSGIApplication([('/', ViewNumbers),
                                         ('/enable/([^/]+)', enable),
                                         ('/disable/([^/]+)', disable),
+										('/load_new', load_new),
                                         ('/json', generate_json),
                                         
                                         ],

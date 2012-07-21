@@ -18,6 +18,10 @@ handlers:
   static_files: favicon.ico
   upload: favicon\.ico
 
+- url: /feed_fragment\.json
+  static_files: feed_fragment.json
+  upload: feed_fragment.json
+
 - url: /feed_sample\.json
   static_files: feed_sample.json
   upload: feed_sample\.json
