@@ -31,10 +31,10 @@
 						<!-- {{ number.digit }} -->
 					    {% if number.display %}
 							<a href="#" onclick="openOverlay('{{preview_url}}{{ number.url }}')"><img class="img img_enabled" src='{{base_url}}{{ number.url }}'></a>
-							<div class="tab"><div class="number_text">{{ number.digit }}</div><a href="#" class="number_link_disable" id="{{number.key.name}}"><div class="button enabled"></div></a> </div>
+							<div class="tab"><div class="number_text">{{ number.digit }}</div><a href="javascript:void(0)" class="number_link disable" id="{{number.key.name}}"><div class="button enabled"></div></a> </div>
 						{% else %}
 							<a href="#" onclick="openOverlay('{{preview_url}}{{ number.url }}')"><img class="img img_disabled" src='{{base_url}}{{ number.url }}'></a>
-							<div class="tab"><div class="number_text">{{ number.digit }}</div><a href="#" class="number_link_enable" id="{{number.key.name}}"><div class="button disabled"></div></a> </div>
+							<div class="tab"><div class="number_text">{{ number.digit }}</div><a href="javascript:void(0)" class="number_link enable" id="{{number.key.name}}"><div class="button disabled"></div></a> </div>
 						{% endif %}
 					</div>
 				</div>
@@ -64,10 +64,10 @@
 					<div class="number">
 					    {% if number.display %}
 							<a href="#" onclick="openOverlay('{{preview_url}}{{ number.url }}')"><img class="img img_enabled" src='{{base_url}}{{ number.url }}'></a>
-							<div class="tab"><div class="number_text">{{ number.digit }}</div><a href="#"><div class="button enabled"></div></a> </div>
+							<div class="tab"><div class="number_text">{{ number.digit }}</div><a href="javascript:void(0)" id="{{number.key.name}}" class="number_link disable"><div class="button enabled"></div></a> </div>
 						{% else %}
 							<a href="#" onclick="openOverlay('{{preview_url}}{{ number.url }}')"><img class="img img_disabled" src='{{base_url}}{{ number.url }}'></a>
-							<div class="tab"><div class="number_text">{{ number.digit }}</div><a href="#"><div class="button disabled"></div></a> </div>
+							<div class="tab"><div class="number_text">{{ number.digit }}</div><a href="javascript:void(0)" id="{{number.key.name}}" class="number_link enable"><div class="button disabled"></div></a> </div>
 						{% endif %}
 					</div>
 					

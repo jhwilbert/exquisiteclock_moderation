@@ -141,6 +141,15 @@ img {
   margin-bottom:40px;
 }
 
+.pagination a:link {
+    color: white;
+}
+
+.pagination a:visited {
+    color:white;
+}
+
+
 #pagination_next {
   float:right;
   padding-right:40px;

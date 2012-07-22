@@ -193,12 +193,22 @@ class load_new(webapp.RequestHandler):
                     new_numbers = new_numbers+1
                     keyname = x.get("URL")[:-4]
                     images_store.get_or_insert(keyname, display=False,new=True,digit= n,url=x.get("URL"))
-        #if new_numbers > 0:
-            #send_mail()
+        if new_numbers > 0:
+            send_mail()
             
-    
-            
+class send_mail():
+    """
+    Notifies recipients of new number arrivals. TODO: Implement multiple recipients using dict.
+    """
 
+    mail.send_mail(sender="ExquisiteClock <jhwilbert@gmail.com>",
+                  to="Joao Wilbert <jhwilbert@gmail.com>",
+                  subject="Exquisite Clock Moderation",
+                  body="""
+    New numbers have been uploaded to the clock.
+
+    """)    
+            
 ###############################################################################################
 # MAIN
 ###############################################################################################
