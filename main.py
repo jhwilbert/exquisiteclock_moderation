@@ -170,12 +170,12 @@ class generate_json(webapp.RequestHandler):
 class load_new(webapp.RequestHandler):
     """
     Loads recent numbers from Exquisite Clock JSON output
-    To be called using backend: http://localhost:8080/load_new
+    To be called using frontend: http://localhost:8080/load_new
     """
     
     def get(self):
         self.response.out.write("<html><body>")
-        self.response.out.write("<p>Loading recent numbers from Exquisite Clock</p>")
+        self.response.out.write("<p>Loading recent numbers from Exquisite Clock !</p>")
         self.response.out.write("</body></html>")
         
         new_numbers = 0
@@ -185,11 +185,13 @@ class load_new(webapp.RequestHandler):
         response = urllib.urlopen(settings.env_vars["JSON_PATH"])
         content = response.read()
         json_output = simplejson.loads(content)
-
+        
+        print ''
         # Parse JSON and populate datastore
         for n in range(0, 10):
             for x in json_output[str(n)]:
                 if x.has_key("N"):
+                    print "One New Number",x
                     new_numbers = new_numbers+1
                     keyname = x.get("URL")[:-4]
                     images_store.get_or_insert(keyname, display=False,new=True,digit= n,url=x.get("URL"))
